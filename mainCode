@@ -1,0 +1,27 @@
+library(data.table)
+
+library(dplyr)
+
+install.packages("RSiteCatalyst")
+library("RSiteCatalyst")
+
+install.packages("WriteXLS")
+library("WriteXLS")
+
+# check your web serrvices in company settings to get the key,secret.
+
+key <- "user:company"
+secret <- "secret here"
+SCAuth(key, secret)
+
+suites <- GetReportSuites()
+
+my.rsid <- suites[suites$site_title=="RSID",1]
+
+evars <- GetEvars("rsid")
+props <- GetProps("rsid")
+events<- GetSuccessEvents("rsid")
+
+write.csv(evars,"Evars.csv")   #save table to csv
+write.csv(props,"Props.csv")   #save table to csv
+write.csv(events,"Events.csv") #save table to csv
